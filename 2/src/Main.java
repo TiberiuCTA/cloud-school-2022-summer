@@ -7,8 +7,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Doctor> arrayList=new ArrayList<>();
-        ArrayList<Generalist> generics=new ArrayList<>();
+        ArrayList<Doctor> arrayList = new ArrayList<>();
+        ArrayList<Generalist> generics = new ArrayList<>();
         arrayList.add(new Surgeon("heart", "Mihai1"));
         arrayList.add(new Generalist(12, "Andrei1"));
         arrayList.add(new Surgeon("heart", "Mihai2"));
@@ -17,33 +17,33 @@ public class Main {
         arrayList.add(new Generalist(5, "Andrei3"));
 
         System.out.println("\n---Iterate through the array and print all the doctors");
-        for(int i=0;i<arrayList.size();i++){
-            if(arrayList.get(i) instanceof Generalist)
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i) instanceof Generalist)
                 generics.add(((Generalist) arrayList.get(i)));
             System.out.println(arrayList.get(i));
         }
 
-        HashMap<String, Integer> hashMap=new HashMap<>();
+        HashMap<String, Integer> hashMap = new HashMap<>();
 
         System.out.println();
-        int sum=0, noOfGeneralist=0;
+        int sum = 0, noOfGeneralist = 0;
         System.out.println("---Using instanceOf, perform the specific behaviour depending on doctor’s type");
-        for(int i=0;i<arrayList.size();i++){
-            if(arrayList.get(i) instanceof Surgeon){
+        for (int i = 0; i < arrayList.size(); i++) {
+            if (arrayList.get(i) instanceof Surgeon) {
                 ((Surgeon) arrayList.get(i)).intervention();
 
                 if (hashMap.get(((Surgeon) arrayList.get(i)).expertise) == null)
                     hashMap.put(((Surgeon) arrayList.get(i)).expertise, 1);
-                else{
-                    int newVal=hashMap.get(((Surgeon) arrayList.get(i)).expertise) + 1;
+                else {
+                    int newVal = hashMap.get(((Surgeon) arrayList.get(i)).expertise) + 1;
                     hashMap.replace(((Surgeon) arrayList.get(i)).expertise, newVal);
                 }
-                if (hashMap.get(((Surgeon) arrayList.get(i)).expertise) >= 2){
+                if (hashMap.get(((Surgeon) arrayList.get(i)).expertise) >= 2) {
                     System.out.println("---Check if there are at least two doctors with the same expertise");
-                    System.out.println(" >>> expertiza comuna este "+((Surgeon) arrayList.get(i)).expertise);
+                    System.out.println(" >>> expertiza comuna este " + ((Surgeon) arrayList.get(i)).expertise);
                 }
             }
-            if(arrayList.get(i) instanceof Generalist) {
+            if (arrayList.get(i) instanceof Generalist) {
                 noOfGeneralist++;
                 ((Generalist) arrayList.get(i)).getRecipe();
                 sum += ((Generalist) arrayList.get(i)).noPatients;
@@ -51,17 +51,17 @@ public class Main {
         }
 
         Collections.sort(generics, new Comparator<Generalist>() {
-                    @Override
-                    public int compare(Generalist g1, Generalist g2) {
-                        return g1.compareTo(g2);
-                    }
-                });
+            @Override
+            public int compare(Generalist g1, Generalist g2) {
+                return g1.compareTo(g2);
+            }
+        });
         System.out.println("\n---Order all generalist doctors by the number of their patients (optional)");
         System.out.println(generics);
 
-        int res=0;
-        for(int i=0;i<generics.size();i++){
-            if(generics.get(i).noPatients>sum/noOfGeneralist)
+        int res = 0;
+        for (int i = 0; i < generics.size(); i++) {
+            if (generics.get(i).noPatients > sum / noOfGeneralist)
                 res++;
         }
         System.out.println("\n---Find out how many generalist doctors have a larger number " +
@@ -70,15 +70,15 @@ public class Main {
     }
 }
 
-class Doctor{
+class Doctor {
     String name;
 
-    public Doctor(){
+    public Doctor() {
 
     }
 
-    public Doctor(String name){
-        this.name=name;
+    public Doctor(String name) {
+        this.name = name;
     }
 
     @Override
@@ -89,7 +89,7 @@ class Doctor{
     }
 }
 
-class Surgeon extends Doctor{
+class Surgeon extends Doctor {
     String expertise;
 
     public Surgeon() {
@@ -108,12 +108,12 @@ class Surgeon extends Doctor{
                 '}';
     }
 
-    public void intervention(){
+    public void intervention() {
         System.out.println("intervention");
     }
 }
 
-class Generalist extends Doctor implements Comparable<Generalist>{
+class Generalist extends Doctor implements Comparable<Generalist> {
     int noPatients;
 
     public Generalist() {
@@ -132,11 +132,11 @@ class Generalist extends Doctor implements Comparable<Generalist>{
                 '}';
     }
 
-    public void getRecipe(){
+    public void getRecipe() {
         System.out.println("recipe");
     }
 
-    public int compareTo(Generalist generalist){
-        return ((Integer)noPatients).compareTo(generalist.noPatients);
+    public int compareTo(Generalist generalist) {
+        return ((Integer) noPatients).compareTo(generalist.noPatients);
     }
 }

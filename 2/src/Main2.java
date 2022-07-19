@@ -3,8 +3,8 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class Main2 {
-    public static void main(String[] args){
-        BusStation busStation=new BusStation();
+    public static void main(String[] args) {
+        BusStation busStation = new BusStation();
 
         busStation.arrayList.add(new Bus("galben", true, 30, 10));
         busStation.arrayList.add(new Taxi("galben", true, 3, 15));
@@ -22,11 +22,11 @@ public class Main2 {
     }
 }
 
-abstract class Vehicle implements Comparable<Vehicle>{
+abstract class Vehicle implements Comparable<Vehicle> {
     private String colour;
     private boolean functional;
 
-    public Vehicle(){
+    public Vehicle() {
 
     }
 
@@ -52,15 +52,17 @@ abstract class Vehicle implements Comparable<Vehicle>{
     }
 
     abstract int charge();
+
     abstract int profit();
+
     abstract void display();
 
-    public int compareTo(Vehicle vehicle){
-        return ((Integer)profit()).compareTo(vehicle.profit());
+    public int compareTo(Vehicle vehicle) {
+        return ((Integer) profit()).compareTo(vehicle.profit());
     }
 }
 
-class Bus extends Vehicle{
+class Bus extends Vehicle {
     int noPassangers, ticketPrice;
 
     public Bus(int noPassangers, int ticketPrice) {
@@ -74,13 +76,15 @@ class Bus extends Vehicle{
         this.ticketPrice = ticketPrice;
     }
 
-    public int charge(){
-        return ticketPrice*noPassangers;
+    public int charge() {
+        return ticketPrice * noPassangers;
     }
-    public int profit(){
-        return (25*charge())/100;
+
+    public int profit() {
+        return (25 * charge()) / 100;
     }
-    public void display(){
+
+    public void display() {
         System.out.println(this);
     }
 
@@ -94,7 +98,7 @@ class Bus extends Vehicle{
     }
 }
 
-class Taxi extends Vehicle{
+class Taxi extends Vehicle {
     int noPassangers, ticketPrice;
 
     public Taxi(int noPassangers, int ticketPrice) {
@@ -108,13 +112,15 @@ class Taxi extends Vehicle{
         this.ticketPrice = ticketPrice;
     }
 
-    public int charge(){
-        return ticketPrice*noPassangers;
+    public int charge() {
+        return ticketPrice * noPassangers;
     }
-    public int profit(){
-        return (25*charge())/100;
+
+    public int profit() {
+        return (25 * charge()) / 100;
     }
-    public void display(){
+
+    public void display() {
         System.out.println(this);
     }
 
@@ -128,22 +134,24 @@ class Taxi extends Vehicle{
     }
 }
 
-class BusStation{
-    ArrayList<Vehicle> arrayList=new ArrayList<>();
+class BusStation {
+    ArrayList<Vehicle> arrayList = new ArrayList<>();
 
-    public void showAllVehicles(){
-        for(int i=0;i<arrayList.size();i++){
+    public void showAllVehicles() {
+        for (int i = 0; i < arrayList.size(); i++) {
             arrayList.get(i).display();
         }
     }
-    public void showTotalProfit(){
-        int totalProfit=0;
-        for(int i=0;i<arrayList.size();i++){
-            totalProfit+=arrayList.get(i).profit();
+
+    public void showTotalProfit() {
+        int totalProfit = 0;
+        for (int i = 0; i < arrayList.size(); i++) {
+            totalProfit += arrayList.get(i).profit();
         }
         System.out.println(totalProfit);
     }
-    public void sortVehicles(){
+
+    public void sortVehicles() {
         Collections.sort(arrayList, new Comparator<Vehicle>() {
             @Override
             public int compare(Vehicle v1, Vehicle v2) {
