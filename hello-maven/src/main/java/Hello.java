@@ -1,11 +1,8 @@
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
-
 import java.sql.*;
 
 public class Hello {
 
-    private static void insert(Connection connection) {
+    public void insert(Connection connection) {
         try {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO `customers` (`username`, `phone`) VALUES (? , ?)");
             ps.setString(1, "popescud");
@@ -18,9 +15,28 @@ public class Hello {
         }
     }
 
-    private static void select(Connection connection) throws SQLException {
+    public boolean delete(Connection connection, int id) throws SQLException {
         Statement s = connection.createStatement();
-        ResultSet rs = s.executeQuery("SELECT * FROM `customers`");
+        int noDeleted = s.executeUpdate("DELETE FROM `" + "orders" + "` WHERE `id` = '" + id + "'");
+        return noDeleted > 0;
+    }
+
+    public void update(Connection connection) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("INSERT INTO `customers` (`username`, `phone`) VALUES (? , ?)");
+            ps.setString(1, "popescud");
+            ps.setString(2, "0721982713");
+            int noInserted = ps.executeUpdate();
+            System.out.println((noInserted > 0 ? noInserted : "None ") + "inserted");
+        } catch (SQLException exception) {
+            System.err.println("There was a problem with SQL: " + exception.getMessage());
+            exception.printStackTrace();
+        }
+    }
+
+    public void select(Connection connection, String tableName) throws SQLException {
+        Statement s = connection.createStatement();
+        ResultSet rs = s.executeQuery("SELECT * FROM `"+tableName+"`");
 
         StringBuilder sb = new StringBuilder();
         while(rs.next()) {
@@ -31,25 +47,26 @@ public class Hello {
         System.out.print(sb);
     }
 
-    private static Connection connect() throws SQLException {
-        String connectionUrl = "jdbc:mysql://localhost:3306/db_tech_school";
+    public Connection connect() throws SQLException {
+        String connectionUrl = "jdbc:mysql://localhost:3306/tema3";
         String username = "root";
-        String password = "D@t@tables";
+        String password = "root";
         return DriverManager.getConnection(connectionUrl, username, password);
     }
 
     public static void main(String args[]) {
-        Pair pari = new ImmutablePair<String, String>("test", "altceva");
         try {
-            Connection connection = Hello.connect();
+            Hello hello=new Hello();
+            Connection connection = hello.connect();
 //            Hello.insert(connection);
-//            Hello.select(connection);
+            hello.select(connection, Customer.tableName);
 
-            Customer customer = Customer.getById(connection, 3);
-//            System.out.println(customer);
+           // Customer customer = Customer.getById(connection, 3);
+            //System.out.println(customer);
+            //Hello.delete(connection, 7);
 //            System.out.println(Customer.delete(connection, 9) ? "s-a sters" : "nu s-a sters");
-            boolean added = Order.addOrder(connection, customer, new Order("2022-01-01", "2022-01-01", "in progress", customer.id));
-            System.out.println((added ? "added " : " not added") + " order");
+            //boolean added = Order.addOrder(connection, customer, new Order("2022-01-01", "2022-01-01", "in progress", customer.id));
+            //System.out.println((added ? "added " : " not added") + " order");
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
