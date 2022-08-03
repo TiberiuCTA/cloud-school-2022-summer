@@ -2,20 +2,39 @@ package com.example.myfirst.controller;
 
 import com.example.myfirst.model.Customer;
 import com.example.myfirst.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("customer")
+@RequiredArgsConstructor
 public class CustomerController {
+    private final CustomerService customerService;
 
-    @Autowired
-    CustomerService customerService;
-
-    @GetMapping("/customer/all")
-    public List<Customer> getAllCustomers(){
+    @GetMapping("all")
+    public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
+    }
+
+    @GetMapping("{id}")
+    public Customer getById(@PathVariable Integer id) {
+        return customerService.getById(id);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteById(@PathVariable Integer id) {
+        customerService.deleteById(id);
+    }
+
+    @PostMapping()
+    public void insert(@RequestBody Customer customer) {
+        customerService.insert(customer);
+    }
+
+    @PutMapping("{id}")
+    public void update(@RequestBody Customer customer, @PathVariable Integer id) {
+        customerService.update(customer, id);
     }
 }

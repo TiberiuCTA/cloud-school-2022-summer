@@ -1,9 +1,12 @@
 package com.example.myfirst.repository;
 
-import com.example.myfirst.model.Product;
+import com.example.myfirst.model.*;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
 
+@Repository
 public interface ProductRepository extends CrudRepository<Product, Integer> {
-    public void delete(Product product);
+    List<Product> findAll();
 }
