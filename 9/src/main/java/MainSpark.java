@@ -5,7 +5,7 @@ import static spark.Spark.*;
 
 public class MainSpark {
     public static void main(String[] args){
-        //BasicConfigurator.configure();
+        BasicConfigurator.configure();
 
         get("/users", (request, response) -> {
             if(request.queryParams("name")==null){
